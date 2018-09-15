@@ -212,9 +212,8 @@ getPerformance(data.mat, y.sim, splite.sim, 8.066, 2000)
 
 
 #####
-
-haberman <- read.csv('~/Documents/school/Winter\ 17/Computing/haberman.csv',
-     header=FALSE)
+## setup for example run
+haberman <- read.csv('~/Documents/school/Winter\ 17/Computing/haberman.csv', header=FALSE)
 names(haberman) <- c('age','year','nodes','survive5')
 haberman$survive5[haberman$survive5==2] <- 0
 summary(glm(survive5 ~ age + nodes, data=haberman, family='binomial'))
@@ -244,15 +243,8 @@ gamma <- eigen(A)$vectors
 g.inv <- solve(gamma)
 R <- gamma%*%big.D%*%g.inv ### changes with epsilon!!!!
 
-tmp <- split.HMC(scaled, Y, q.hat, hess, S, R, 7, .15,1000) # gets stuck
-tmpe <- split.HMCe(scaled, Y, q.hat, hess, S, R, 10, .1,1000,.8) # show difference
-# with and without the varying step size
-tmp.6 <- split.HMCe(scaled, Y, q.hat, hess, S, R, 7, .15,1000,.9)
-system.time(split.HMC(scaled, Y, q.hat, hess, S, R, 10, .1,1000))
-
-
 ####
-# for the paper
+
 std.hab <- logistic.HMC(scaled, Y, q.hat,S,M=diag(3),20,.003, 2000)
 system.time(logistic.HMC(scaled, Y, q.hat,S,M=diag(3),20,.003, 2000))
 getPerformance(scaled, Y, std.hab, 2.268,2000)
